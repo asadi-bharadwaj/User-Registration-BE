@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh '/opt/homebrew/bin/mvn clean install'
             }
         }
         // Optional: Add test, deploy stages here
