@@ -2,6 +2,7 @@ package com.secure.registration.service;
 
 
 import com.secure.registration.config.SecurityConfig;
+import com.secure.registration.dto.LoginDTO;
 import com.secure.registration.dto.UserDTO;
 import com.secure.registration.entity.User;
 import com.secure.registration.repository.UserRepository;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -37,5 +40,27 @@ public class UserServiceImpl implements UserService{
         }
         log.info("Registering user completed {}", userDto.getEmail());
         return "user registered successfully";
+    }
+
+    @Override
+    public boolean authenticateUser(LoginDTO loginDTO) {
+        log.info("Authenticating user with email: {}", loginDTO.getEmail());
+
+        Optional<User> optionalUser = userRepository.findByEmail(loginDTO.getEmail());
+
+        if (optionalUser.isEmpty()) {
+            log.warn("Login failed: email not found - {}", loginDTO.getEmail());
+            return false;
+        }
+
+        User user = optionalUser.get();
+        boolean passwordMatches = passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
+        if (passwordMatches) {
+            log.info("User login successful for email: {}", loginDTO.getEmail());
+        } else {
+            log.warn("User login failed: incorrect password for email: {}", loginDTO.getEmail());
+        }
+
+        return passwordMatches;
     }
 }
