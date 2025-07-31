@@ -1,0 +1,7 @@
+POST /auth/login
+Content-Type: application/json
+
+{
+  "email": "bharadwaj@example.com",
+  "password": "actual_password"
+}
