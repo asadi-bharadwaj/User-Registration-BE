@@ -1,0 +1,32 @@
+# User Registration
+
+A Spring Boot-based backend service that handles user registration and login with CSRF protection.
+
+## Features
+
+- **User Registration** via `/api/users/register`
+- **User Login** via `/api/users/login`
+- **Health Check** endpoint
+- **CSRF Token** generation for security
+
+## Technologies Used
+
+- Java 17+
+- Spring Boot
+- Spring Security
+- Spring Web
+- Jakarta Servlet API
+- Maven
+- JSON (for request/response bodies)
+
+---
+
+## API Endpoints
+
+### 1. Health Check
+
+- **URL:** `GET /api/users/health-check`
+- **Description:** Verifies if the backend is running.
+- **Response:**
+  ```text
+  Hello world
